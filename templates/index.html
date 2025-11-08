@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compilador MiniLang - Interfaz Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .panel {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .panel-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 300px;
+            background: white;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .checkbox-group {
+            margin: 15px 0;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-compile {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-compile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-clear {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-clear:hover {
+            background: #5a6268;
+        }
+        
+        .examples {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .example-btn {
+            padding: 8px 15px;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+        
+        .example-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            min-height: 150px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .output.success {
+            border-left: 4px solid #28a745;
+        }
+        
+        .output.error {
+            border-left: 4px solid #dc3545;
+            color: #ff6b6b;
+        }
+        
+        .stages {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .stages.active {
+            display: block;
+        }
+        
+        .stage {
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .stage-header {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .stage-header:hover {
+            background: #5568d3;
+        }
+        
+        .stage-content {
+            padding: 15px;
+            background: #f8f9fa;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            display: none;
+        }
+        
+        .stage-content.active {
+            display: block;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Compilador MiniLang</h1>
+            <p>Interfaz Web Interactiva - Escribe, Compila y Ejecuta</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Panel Izquierdo: Editor -->
+            <div class="panel">
+                <div class="panel-title">
+                    📝 Editor de Código
+                </div>
+                
+                <div class="input-group">
+                    <label>Código MiniLang:</label>
+                    <textarea id="code-editor" placeholder="Escribe tu código aquí...
+Ejemplo:
+read a;
+print a * 2;
+end"></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label>Valores de entrada (separados por espacio):</label>
+                    <input type="text" id="inputs" placeholder="Ej: 5 10 3">
+                </div>
+                
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="show-stages">
+                        Mostrar etapas de compilación (Tokens, AST, IR, etc.)
+                    </label>
+                </div>
+                
+                <div class="buttons">
+                    <button class="btn-compile" onclick="compileCode()">▶️ Compilar y Ejecutar</button>
+                    <button class="btn-clear" onclick="clearAll()">🗑️ Limpiar</button>
+                </div>
+                
+                <div class="input-group">
+                    <label>📚 Ejemplos:</label>
+                    <div class="examples" id="examples-container">
+                        <!-- Se llenan dinámicamente -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Panel Derecho: Resultados -->
+            <div class="panel">
+                <div class="panel-title">
+                    📊 Resultados
+                </div>
+                
+                <div class="input-group">
+                    <label>Salida del Programa:</label>
+                    <div id="output" class="output">Esperando ejecución...</div>
+                </div>
+                
+                <div id="stages-container" class="stages">
+                    <!-- Etapas de compilación -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cargar ejemplos al iniciar
+        window.addEventListener('DOMContentLoaded', loadExamples);
+
+        async function loadExamples() {
+            try {
+                const response = await fetch('/examples');
+                const examples = await response.json();
+                const container = document.getElementById('examples-container');
+                
+                for (const [key, example] of Object.entries(examples)) {
+                    const btn = document.createElement('button');
+                    btn.className = 'example-btn';
+                    btn.textContent = example.name;
+                    btn.title = example.description;
+                    btn.onclick = () => loadExample(example);
+                    container.appendChild(btn);
+                }
+            } catch (error) {
+                console.error('Error cargando ejemplos:', error);
+            }
+        }
+
+        function loadExample(example) {
+            document.getElementById('code-editor').value = example.code;
+            document.getElementById('inputs').value = example.inputs;
+        }
+
+        async function compileCode() {
+            const code = document.getElementById('code-editor').value;
+            const inputs = document.getElementById('inputs').value;
+            const showStages = document.getElementById('show-stages').checked;
+            const outputDiv = document.getElementById('output');
+            const stagesContainer = document.getElementById('stages-container');
+            
+            if (!code.trim()) {
+                outputDiv.className = 'output error';
+                outputDiv.textContent = 'Error: El código está vacío';
+                return;
+            }
+            
+            // Mostrar loading
+            outputDiv.className = 'output';
+            outputDiv.textContent = '⏳ Compilando y ejecutando...';
+            stagesContainer.classList.remove('active');
+            stagesContainer.innerHTML = '';
+            
+            try {
+                const response = await fetch('/compile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        code: code,
+                        inputs: inputs,
+                        show_stages: showStages
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    outputDiv.className = 'output success';
+                    
+                    if (result.outputs && result.outputs.length > 0) {
+                        outputDiv.textContent = '✅ Ejecución exitosa!\n\n' +
+                                              'Salida:\n' +
+                                              result.outputs.join('\n');
+                    } else {
+                        outputDiv.textContent = '✅ Compilación exitosa!\n\nEl programa no generó salida.';
+                    }
+                    
+                    // Mostrar etapas si están disponibles
+                    if (result.stages && showStages) {
+                        stagesContainer.classList.add('active');
+                        const stages = {
+                            'Advertencias Semánticas': result.stages.warnings,
+                            'Tokens': result.stages.tokens,
+                            'AST': result.stages.ast,
+                            'Código Intermedio (TAC)': result.stages.ir,
+                            'Ensamblador': result.stages.asm,
+                            'Código Máquina': result.stages.machine
+                        };
+                        
+                        for (const [name, content] of Object.entries(stages)) {
+                            const stageDiv = createStageDiv(name, content);
+                            stagesContainer.appendChild(stageDiv);
+                        }
+                    }
+                } else {
+                    outputDiv.className = 'output error';
+                    outputDiv.textContent = '❌ ' + result.error;
+                }
+            } catch (error) {
+                outputDiv.className = 'output error';
+                outputDiv.textContent = '❌ Error de conexión: ' + error.message;
+            }
+        }
+
+        function createStageDiv(title, content) {
+            const stageDiv = document.createElement('div');
+            stageDiv.className = 'stage';
+            
+            const header = document.createElement('div');
+            header.className = 'stage-header';
+            header.textContent = '▼ ' + title;
+            header.onclick = function() {
+                const contentDiv = stageDiv.querySelector('.stage-content');
+                contentDiv.classList.toggle('active');
+                header.textContent = (contentDiv.classList.contains('active') ? '▼ ' : '▶ ') + title;
+            };
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'stage-content';
+            contentDiv.textContent = content;
+            
+            stageDiv.appendChild(header);
+            stageDiv.appendChild(contentDiv);
+            
+            return stageDiv;
+        }
+
+        function clearAll() {
+            document.getElementById('code-editor').value = '';
+            document.getElementById('inputs').value = '';
+            document.getElementById('show-stages').checked = false;
+            document.getElementById('output').className = 'output';
+            document.getElementById('output').textContent = 'Esperando ejecución...';
+            document.getElementById('stages-container').classList.remove('active');
+            document.getElementById('stages-container').innerHTML = '';
+        }
+        
+        // Atajo de teclado Ctrl+Enter para compilar
+        document.getElementById('code-editor').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                compileCode();
+            }
+        });
+    </script>
+</body>
+</html>

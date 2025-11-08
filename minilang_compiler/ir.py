@@ -101,3 +101,17 @@ class IRGenerator:
             self.ir.append(IRInstr(expr.op, l, r, t))
             return t
         raise RuntimeError(f"Unknown expression type: {type(expr)}")
+
+#4. Generador de Código Intermedio (IR / TAC)
+
+#· Traduce el AST a código intermedio en formato de tres direcciones (TAC).
+
+#· Implementa el control de flujo mediante etiquetas (L1, L2, etc.) y temporales (t1, t2, ...).
+
+#· Representa instrucciones de asignación, salto condicional, entrada y salida.
+
+#· Opcional: aplica optimizaciones independientes de máquina como:
+
+#o Constant folding (evaluación de expresiones constantes).
+
+#o Dead code elimination (eliminación de código no utilizado).
