@@ -1,0 +1,9 @@
+// Program 5: IO echo - read and print values
+// Expected: with inputs 42, 7, 0 -> prints 42, 7, 0
+read a;
+print a;
+read b;
+print b;
+read c;
+print c;
+end

@@ -1,0 +1,30 @@
+[project]
+name = "minilang-compiler"
+version = "0.1.0"
+description = "MiniLang compiler: Lexer -> Parser -> Semantic -> IR -> ASM -> Machine Code -> VM"
+authors = [{ name = "Alejo" }]
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["compiler", "education", "vm", "ir", "assembly"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Education",
+    "Topic :: Software Development :: Compilers",
+]
+
+[project.scripts]
+minilangc = "minilang_compiler.compiler:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["minilang_compiler*"]
+exclude = ["tests*", "test_output*", "examples*", "docs*"]

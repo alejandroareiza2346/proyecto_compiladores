@@ -1,0 +1,10 @@
+// Program 3: While loop with zero iterations
+// Expected: with input 0 -> prints 999, no loop executes
+read n;
+i = 0;
+while i < n {
+    print i;
+    i = i + 1;
+}
+print 999;
+end

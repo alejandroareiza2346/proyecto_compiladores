@@ -1,0 +1,14 @@
+read a;
+read b;
+c = a + b * 2;
+if c >= 10 {
+    print c;
+} else {
+    print 0;
+}
+i = 0;
+while i < c {
+    print i;
+    i = i + 1;
+}
+end

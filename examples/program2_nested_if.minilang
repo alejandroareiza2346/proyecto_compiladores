@@ -1,0 +1,16 @@
+// Program 2: Nested if-else statements
+// Expected: with inputs 5, 10 -> prints 15 then 1
+read x;
+read y;
+sum = x + y;
+if sum > 10 {
+    print sum;
+    if x < y {
+        print 1;
+    } else {
+        print 0;
+    }
+} else {
+    print 0;
+}
+end
