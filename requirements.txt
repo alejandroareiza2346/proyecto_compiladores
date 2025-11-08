@@ -1,0 +1,16 @@
+# Dependencias del Compilador MiniLang
+# Para instalar: pip install -r requirements.txt
+
+# Framework web para la interfaz
+Flask>=3.1.0
+
+# Testing
+pytest>=8.4.0
+
+# Dependencias de Flask (se instalan automáticamente)
+blinker>=1.9.0
+click>=8.3.0
+itsdangerous>=2.2.0
+Jinja2>=3.1.0
+MarkupSafe>=3.0.0
+Werkzeug>=3.1.0

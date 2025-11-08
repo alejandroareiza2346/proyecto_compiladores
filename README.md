@@ -40,14 +40,11 @@ cd project_final
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 
-# Instalar el compilador
+# Instalar todas las dependencias (Flask, pytest, etc.)
+pip install -r requirements.txt
+
+# Instalar el compilador en modo editable
 pip install -e .
-
-# Para la interfaz web, instalar Flask
-pip install Flask
-
-# Para correr tests
-pip install pytest
 ```
 
 ## 🌐 Interfaz Web (Recomendado)
