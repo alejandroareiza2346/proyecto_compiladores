@@ -2,6 +2,8 @@
 
 Este es mi proyecto de compilador para el lenguaje MiniLang. Implementa todas las fases de compilación desde análisis léxico hasta ejecución en una máquina virtual.
 
+**✨ NUEVO: Ahora incluye una interfaz web interactiva!** 🚀
+
 ## ¿Qué hace?
 
 El compilador procesa archivos `.minilang` y los ejecuta pasando por estas etapas:
@@ -41,11 +43,35 @@ python -m venv .venv
 # Instalar el compilador
 pip install -e .
 
+# Para la interfaz web, instalar Flask
+pip install Flask
+
 # Para correr tests
 pip install pytest
 ```
 
-## Cómo usarlo
+## 🌐 Interfaz Web (Recomendado)
+
+La forma más fácil de usar el compilador es con la interfaz web:
+
+```powershell
+# Iniciar el servidor
+python web_app.py
+
+# Abre tu navegador en: http://127.0.0.1:5000
+```
+
+**Características de la interfaz:**
+
+- 📝 Editor de código integrado
+- 🎨 5 programas de ejemplo listos para usar
+- ▶️ Compilación y ejecución con un clic
+- 🔍 Visualización de todas las etapas (Tokens, AST, IR, Assembly, Machine Code)
+- 💾 Entrada de valores interactiva para `read`
+- ⚡ Resultados en tiempo real con formato
+- ⌨️ Atajo de teclado: `Ctrl + Enter` para compilar
+
+## 💻 Uso por Línea de Comandos
 
 ### Ejecutar un programa
 
