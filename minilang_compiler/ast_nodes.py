@@ -1,8 +1,5 @@
 """
 MÓDULO DE NODOS DEL ÁRBOL DE SINTAXIS ABSTRACTA (AST)
-Proyecto: Compilador MiniLang
-Universidad: [Nombre de la Universidad]
-Curso: Compiladores
 
 PROPÓSITO:
 Define las estructuras de datos que representan el Árbol de Sintaxis Abstracta (AST).

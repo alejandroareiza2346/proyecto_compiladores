@@ -152,8 +152,7 @@ Cada error incluye:
 - `_advance()`: Consume un carácter, actualiza contadores de posición
 - `_peek()`: Mira el carácter actual sin consumir
 - `_match(expected)`: Avance condicional si el carácter coincide
-- `_skip_whitespace_and_comments()`: Salta caracteres que no son tokens
-- `_identifier(start_line, start_col)`: Tokeniza identificador o palabra clave
+- `_skip_whitespace_and_comments()`: Salta caracteres quedentifier(start_line, start_col)`: Tokeniza identificador o palabra clave
 - `_number(start_line, start_col)`: Tokeniza literal numérico
 
 **Complejidad**: O(n) donde n es la longitud del código fuente
