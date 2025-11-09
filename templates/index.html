@@ -12,205 +12,351 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1280px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
+            background: #0d1117;
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
         
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f6feb;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+        
+        .logo:hover {
+            color: #58a6ff;
+        }
+        
+        .logo span:first-child {
+            font-size: 24px;
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: #e6edf3;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+        }
+        
+        .nav-link:hover {
+            background: #21262d;
+        }
+        
+        .btn-tutorial {
+            background: #238636;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        .btn-tutorial:hover {
+            background: #2ea043;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-tutorial:active {
+            transform: translateY(0);
         }
         
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 20px;
+            gap: 16px;
+            padding: 24px 32px;
+            max-width: 1280px;
+            margin: 0 auto;
         }
         
         .panel {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        }
+        
+        .panel-header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
         .panel-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #c9d1d9;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+        }
+        
+        .panel-body {
+            padding: 16px;
+        }
+        
+        .btn-hidden {
+            display: none;
         }
         
         textarea {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
+            padding: 12px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 14px;
             resize: vertical;
-            min-height: 300px;
-            background: white;
-            transition: border-color 0.3s;
+            min-height: 350px;
+            background: #0d1117;
+            color: #e6edf3;
+            transition: all 0.2s ease;
+            line-height: 1.6;
         }
         
         textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #1f6feb;
+            box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.12);
         }
         
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
         
         .input-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #333;
+            color: #e6edf3;
+            font-size: 14px;
         }
         
         input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            padding: 10px 12px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
             font-size: 14px;
-            transition: border-color 0.3s;
+            background: #0d1117;
+            color: #e6edf3;
+            transition: all 0.2s ease;
         }
         
         input[type="text"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #1f6feb;
+            box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.12);
+        }
+        
+        input[type="text"]::placeholder {
+            color: #7d8590;
         }
         
         .checkbox-group {
-            margin: 15px 0;
+            margin: 16px 0;
         }
         
         .checkbox-group label {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 14px;
+            color: #e6edf3;
+            padding: 8px 0;
         }
         
         .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             cursor: pointer;
+            accent-color: #238636;
         }
         
         .buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 16px;
         }
         
         button {
             flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
+            padding: 10px 16px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            white-space: nowrap;
         }
         
         .btn-compile {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #238636;
+            color: #ffffff;
+            border-color: rgba(240, 246, 252, 0.1);
+            box-shadow: 0 0 transparent, 0 0 transparent;
         }
         
         .btn-compile:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            background: #2ea043;
+            border-color: rgba(240, 246, 252, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(149, 157, 165, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .btn-compile:active {
+            background: #26a148;
+            transform: translateY(0);
+            box-shadow: none;
         }
         
         .btn-clear {
-            background: #6c757d;
-            color: white;
+            background: transparent;
+            color: #c9d1d9;
+            border: 1px solid rgba(240, 246, 252, 0.1);
         }
         
         .btn-clear:hover {
-            background: #5a6268;
+            background: #21262d;
+            border-color: #8b949e;
+            transform: translateY(-1px);
+        }
+        
+        .btn-clear:active {
+            background: #161b22;
+            transform: translateY(0);
         }
         
         .examples {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
-            margin-top: 15px;
+            margin-top: 8px;
         }
         
         .example-btn {
-            padding: 8px 15px;
-            background: white;
-            border: 2px solid #667eea;
-            color: #667eea;
+            padding: 8px 14px;
+            background: transparent;
+            border: 1px solid #30363d;
+            color: #1f6feb;
             border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
-            transition: all 0.3s;
+            transition: all 0.15s ease;
+            font-weight: 500;
+            white-space: nowrap;
         }
         
         .example-btn:hover {
-            background: #667eea;
-            color: white;
+            background: #161b22;
+            border-color: #1f6feb;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .example-btn:active {
+            transform: translateY(0);
         }
         
         .output {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
+            background: #161b22;
+            color: #e6edf3;
+            padding: 16px;
+            border-radius: 6px;
+            font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 14px;
-            min-height: 150px;
-            max-height: 400px;
+            min-height: 200px;
+            max-height: 500px;
             overflow-y: auto;
             white-space: pre-wrap;
+            border: 1px solid #30363d;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+        
+        .output::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .output::-webkit-scrollbar-track {
+            background: #0d1117;
+            border-radius: 6px;
+        }
+        
+        .output::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 6px;
+        }
+        
+        .output::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
         }
         
         .output.success {
-            border-left: 4px solid #28a745;
+            border-left: 3px solid #2ea043;
+            background: #0d1117;
         }
         
         .output.error {
-            border-left: 4px solid #dc3545;
-            color: #ff6b6b;
+            border-left: 3px solid #f85149;
+            background: #0d1117;
+            color: #ffa198;
         }
         
         .stages {
-            margin-top: 20px;
+            margin-top: 16px;
             display: none;
         }
         
@@ -219,36 +365,65 @@
         }
         
         .stage {
-            margin-bottom: 15px;
-            background: white;
-            border-radius: 8px;
+            margin-bottom: 12px;
+            background: #0d1117;
+            border-radius: 6px;
             overflow: hidden;
-            border: 2px solid #e0e0e0;
+            border: 1px solid #30363d;
+            transition: border-color 0.15s ease;
+        }
+        
+        .stage:hover {
+            border-color: #484f58;
         }
         
         .stage-header {
-            background: #667eea;
-            color: white;
-            padding: 10px 15px;
-            font-weight: bold;
+            background: #161b22;
+            color: #c9d1d9;
+            padding: 12px 16px;
+            font-weight: 600;
             cursor: pointer;
             -webkit-user-select: none;
             user-select: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
         }
         
         .stage-header:hover {
-            background: #5568d3;
+            background: #21262d;
         }
         
         .stage-content {
-            padding: 15px;
-            background: #f8f9fa;
-            font-family: 'Courier New', monospace;
+            padding: 16px;
+            background: #0d1117;
+            font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 13px;
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
             white-space: pre-wrap;
             display: none;
+            color: #e6edf3;
+            line-height: 1.6;
+        }
+        
+        .stage-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .stage-content::-webkit-scrollbar-track {
+            background: #161b22;
+        }
+        
+        .stage-content::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        
+        .stage-content::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
         }
         
         .stage-content.active {
@@ -258,86 +433,481 @@
         .loading {
             text-align: center;
             padding: 20px;
-            color: #667eea;
-            font-weight: bold;
+            color: #58a6ff;
+            font-weight: 600;
+        }
+        
+        /* Tutorial Overlay */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tutorial-overlay.active {
+            display: flex;
+        }
+        
+        .tutorial-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            padding: 32px;
+            position: relative;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .tutorial-card h2 {
+            color: #1f6feb;
+            font-size: 28px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .tutorial-card p {
+            color: #e6edf3;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+        
+        .tutorial-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .btn-skip {
+            background: transparent;
+            color: #7d8590;
+            border: 1px solid #30363d;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+        
+        .btn-skip:hover {
+            background: #21262d;
+            color: #e6edf3;
+            border-color: #484f58;
+        }
+        
+        .btn-start-tutorial {
+            background: #238636;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+        
+        .btn-start-tutorial:hover {
+            background: #2ea043;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(46, 160, 67, 0.3);
+        }
+        
+        .btn-start-tutorial:active {
+            transform: translateY(0);
+        }
+        
+        /* Tooltip Tutorial */
+        .tutorial-tooltip {
+            position: absolute;
+            background: #161b22;
+            border: 2px solid #1f6feb;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 360px;
+            z-index: 1001;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            display: none;
+            animation: tooltipFadeIn 0.2s ease;
+        }
+        
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .tutorial-tooltip.active {
+            display: block;
+        }
+        
+        .tutorial-tooltip::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        
+        .tutorial-tooltip.top::before {
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0 10px;
+            border-color: #1f6feb transparent transparent transparent;
+        }
+        
+        .tutorial-tooltip.bottom::before {
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 0 10px 10px 10px;
+            border-color: transparent transparent #1f6feb transparent;
+        }
+        
+        .tutorial-tooltip.left::before {
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent #1f6feb;
+        }
+        
+        .tutorial-tooltip.right::before {
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #1f6feb transparent transparent;
+        }
+        
+        .tooltip-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .tooltip-step {
+            background: #238636;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .tooltip-title {
+            color: #1f6feb;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .tooltip-content {
+            color: #e6edf3;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .tooltip-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        
+        .btn-tooltip {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn-next {
+            background: #238636;
+            color: white;
+        }
+        
+        .btn-next:hover {
+            background: #2ea043;
+        }
+        
+        .btn-prev {
+            background: transparent;
+            color: #8b949e;
+            border: 1px solid #30363d;
+        }
+        
+        .btn-prev:hover {
+            background: #30363d;
+            color: #c9d1d9;
+        }
+        
+        .btn-finish {
+            background: #1f6feb;
+            color: white;
+        }
+        
+        .btn-finish:hover {
+            background: #388bfd;
+        }
+        
+        .highlight-element {
+            position: relative;
+            z-index: 1002;
+            box-shadow: 0 0 0 4px rgba(31, 111, 235, 0.5), 0 0 0 9999px rgba(0, 0, 0, 0.75);
+            border-radius: 6px;
+            animation: highlightPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes highlightPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 4px rgba(31, 111, 235, 0.5), 0 0 0 9999px rgba(0, 0, 0, 0.75);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(31, 111, 235, 0.6), 0 0 0 9999px rgba(0, 0, 0, 0.75);
+            }
         }
         
         @media (max-width: 1024px) {
             .main-content {
                 grid-template-columns: 1fr;
             }
+            
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .header-nav {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 16px;
+            }
+            
+            .tutorial-card {
+                padding: 24px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Tutorial Overlay -->
+    <div class="tutorial-overlay" id="tutorial-overlay">
+        <div class="tutorial-card">
+            <h2>� ¡Bienvenido al Compilador MiniLang!</h2>
+            <p>
+                Esta es una interfaz web interactiva para compilar y ejecutar programas en el lenguaje MiniLang.
+                Un compilador transforma código fuente legible por humanos en código ejecutable por máquinas.
+            </p>
+            <p>
+                <strong>¿Quieres un recorrido rápido?</strong> Te mostraremos las características principales
+                de esta herramienta en unos segundos. ¡Solo sigue las indicaciones!
+            </p>
+            <div class="tutorial-buttons">
+                <button class="btn-skip" onclick="skipTutorial()">Omitir tutorial</button>
+                <button class="btn-start-tutorial" onclick="startTutorial()">🚀 Comenzar tutorial</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tutorial Tooltip -->
+    <div class="tutorial-tooltip" id="tutorial-tooltip">
+        <div class="tooltip-header">
+            <span class="tooltip-step" id="tooltip-step">Paso 1/7</span>
+        </div>
+        <div class="tooltip-title" id="tooltip-title"></div>
+        <div class="tooltip-content" id="tooltip-content"></div>
+        <div class="tooltip-actions">
+            <button class="btn-tooltip btn-prev btn-hidden" id="btn-prev" onclick="prevStep()">← Anterior</button>
+            <button class="btn-tooltip btn-next" id="btn-next" onclick="nextStep()">Siguiente →</button>
+            <button class="btn-tooltip btn-finish btn-hidden" id="btn-finish" onclick="finishTutorial()">✓ Finalizar</button>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="header">
-            <h1>🚀 Compilador MiniLang</h1>
-            <p>Interfaz Web Interactiva - Escribe, Compila y Ejecuta</p>
+            <div class="header-left">
+                <a href="#" class="logo" id="header-logo">
+                    <span>⚡</span>
+                    <span>MiniLang Compiler</span>
+                </a>
+            </div>
+            <div class="header-nav">
+                <a href="https://github.com/alejandroareiza2346/proyecto_compiladores" target="_blank" rel="noopener" class="nav-link">
+                    📂 Repositorio
+                </a>
+                <button class="btn-tutorial" id="btn-tutorial-header" onclick="showTutorial()">
+                    📚 Tutorial
+                </button>
+            </div>
         </div>
         
         <div class="main-content">
             <!-- Panel Izquierdo: Editor -->
-            <div class="panel">
-                <div class="panel-title">
-                    📝 Editor de Código
+            <div class="panel" id="editor-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span>📝</span>
+                        <span>Editor de Código</span>
+                    </div>
                 </div>
-                
-                <div class="input-group">
-                    <label>Código MiniLang:</label>
-                    <textarea id="code-editor" placeholder="Escribe tu código aquí...
+                <div class="panel-body">
+                    <div class="input-group">
+                        <label for="code-editor">Código MiniLang:</label>
+                        <textarea id="code-editor" placeholder="Escribe tu código aquí...
+
 Ejemplo:
 read a;
 print a * 2;
 end"></textarea>
-                </div>
-                
-                <div class="input-group">
-                    <label>Valores de entrada (separados por espacio):</label>
-                    <input type="text" id="inputs" placeholder="Ej: 5 10 3">
-                </div>
-                
-                <div class="checkbox-group">
-                    <label>
-                        <input type="checkbox" id="show-stages">
-                        Mostrar etapas de compilación (Tokens, AST, IR, etc.)
-                    </label>
-                </div>
-                
-                <div class="buttons">
-                    <button class="btn-compile" onclick="compileCode()">▶️ Compilar y Ejecutar</button>
-                    <button class="btn-clear" onclick="clearAll()">🗑️ Limpiar</button>
-                </div>
-                
-                <div class="input-group">
-                    <label>📚 Ejemplos:</label>
-                    <div class="examples" id="examples-container">
-                        <!-- Se llenan dinámicamente -->
+                    </div>
+                    
+                    <div class="input-group" id="inputs-section">
+                        <label for="inputs">Valores de entrada (separados por espacio):</label>
+                        <input type="text" id="inputs" placeholder="Ej: 5 10 3">
+                    </div>
+                    
+                    <div class="checkbox-group" id="stages-checkbox">
+                        <label>
+                            <input type="checkbox" id="show-stages">
+                            <span>Mostrar etapas de compilación (Tokens, AST, IR, etc.)</span>
+                        </label>
+                    </div>
+                    
+                    <div class="buttons" id="action-buttons">
+                        <button class="btn-compile" onclick="compileCode()">▶️ Compilar y Ejecutar</button>
+                        <button class="btn-clear" onclick="clearAll()">🗑️ Limpiar</button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>📚 Ejemplos predefinidos:</label>
+                        <div class="examples" id="examples-container">
+                            <!-- Se llenan dinámicamente -->
+                        </div>
                     </div>
                 </div>
             </div>
             
             <!-- Panel Derecho: Resultados -->
-            <div class="panel">
-                <div class="panel-title">
-                    📊 Resultados
+            <div class="panel" id="output-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span>📊</span>
+                        <span>Resultados de Ejecución</span>
+                    </div>
                 </div>
-                
-                <div class="input-group">
-                    <label>Salida del Programa:</label>
-                    <div id="output" class="output">Esperando ejecución...</div>
-                </div>
-                
-                <div id="stages-container" class="stages">
-                    <!-- Etapas de compilación -->
+                <div class="panel-body">
+                    <div class="input-group">
+                        <label>Salida del Programa:</label>
+                        <div id="output" class="output">💡 Esperando código para compilar...
+                        
+Tip: Presiona Ctrl+Enter en el editor para compilar rápidamente.</div>
+                    </div>
+                    
+                    <div id="stages-container" class="stages">
+                        <!-- Etapas de compilación -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Estado del tutorial
+        let tutorialActive = false;
+        let currentStep = 0;
+        const tutorialSteps = [
+            {
+                element: 'code-editor',
+                title: 'Editor de Código',
+                content: 'Aquí escribes tu código en el lenguaje MiniLang. Puedes declarar variables, usar operaciones matemáticas, condicionales y bucles. El editor soporta sintaxis básica del lenguaje.',
+                position: 'right'
+            },
+            {
+                element: 'examples-container',
+                title: 'Ejemplos Predefinidos',
+                content: 'Haz clic en cualquier ejemplo para cargar código predefinido automáticamente. Esto te ayudará a entender la sintaxis y capacidades del lenguaje MiniLang.',
+                position: 'top'
+            },
+            {
+                element: 'inputs-section',
+                title: 'Valores de Entrada',
+                content: 'Si tu programa usa la instrucción "read", ingresa aquí los valores separados por espacios. Por ejemplo: "5 10 3". Estos valores se usarán cuando el programa los solicite.',
+                position: 'right'
+            },
+            {
+                element: 'stages-checkbox',
+                title: 'Mostrar Etapas',
+                content: 'Activa esta opción para ver todas las fases del proceso de compilación: análisis léxico (tokens), sintáctico (AST), semántico, código intermedio, ensamblador y código máquina.',
+                position: 'right'
+            },
+            {
+                element: 'action-buttons',
+                title: 'Botones de Acción',
+                content: 'Usa "Compilar y Ejecutar" para procesar tu código (Ctrl+Enter). El botón "Limpiar" borra todo el contenido del editor y reinicia la interfaz.',
+                position: 'top'
+            },
+            {
+                element: 'output',
+                title: 'Salida del Programa',
+                content: 'Aquí verás los resultados de tu programa. Se mostrará la salida generada por las instrucciones "print" o cualquier error de compilación que ocurra.',
+                position: 'left'
+            },
+            {
+                element: 'btn-tutorial-header',
+                title: '¡Listo para Empezar!',
+                content: '¡Perfecto! Ya conoces todas las funciones principales. Puedes volver a ver este tutorial en cualquier momento haciendo clic en el botón "Tutorial" del encabezado. ¡Feliz programación! 🚀',
+                position: 'bottom'
+            }
+        ];
+        
         // Cargar ejemplos al iniciar
-        window.addEventListener('DOMContentLoaded', loadExamples);
+        window.addEventListener('DOMContentLoaded', function() {
+            loadExamples();
+            
+            // Mostrar tutorial solo en la primera visita
+            if (!localStorage.getItem('tutorialCompleted')) {
+                setTimeout(() => {
+                    document.getElementById('tutorial-overlay').classList.add('active');
+                }, 500);
+            }
+        });
 
         async function loadExamples() {
             try {
@@ -372,13 +942,13 @@ end"></textarea>
             
             if (!code.trim()) {
                 outputDiv.className = 'output error';
-                outputDiv.textContent = 'Error: El código está vacío';
+                outputDiv.textContent = '❌ Error: El código está vacío\n\nPor favor, escribe algo de código o carga un ejemplo.';
                 return;
             }
             
             // Mostrar loading
             outputDiv.className = 'output';
-            outputDiv.textContent = '⏳ Compilando y ejecutando...';
+            outputDiv.textContent = '⏳ Compilando y ejecutando...\n\nAnalizando código fuente...';
             stagesContainer.classList.remove('active');
             stagesContainer.innerHTML = '';
             
@@ -402,10 +972,13 @@ end"></textarea>
                     
                     if (result.outputs && result.outputs.length > 0) {
                         outputDiv.textContent = '✅ Ejecución exitosa!\n\n' +
-                                              'Salida:\n' +
+                                              '📤 Salida del programa:\n' +
+                                              '─────────────────────\n' +
                                               result.outputs.join('\n');
                     } else {
-                        outputDiv.textContent = '✅ Compilación exitosa!\n\nEl programa no generó salida.';
+                        outputDiv.textContent = '✅ Compilación exitosa!\n\n' +
+                                              'El programa se compiló correctamente pero no generó ninguna salida.\n' +
+                                              'Tip: Usa la instrucción "print" para mostrar resultados.';
                     }
                     
                     // Mostrar etapas si están disponibles
@@ -413,25 +986,33 @@ end"></textarea>
                         stagesContainer.classList.add('active');
                         const stages = {
                             'Advertencias Semánticas': result.stages.warnings,
-                            'Tokens': result.stages.tokens,
-                            'AST': result.stages.ast,
+                            'Tokens (Análisis Léxico)': result.stages.tokens,
+                            'AST (Árbol de Sintaxis Abstracta)': result.stages.ast,
                             'Código Intermedio (TAC)': result.stages.ir,
                             'Ensamblador': result.stages.asm,
                             'Código Máquina': result.stages.machine
                         };
                         
                         for (const [name, content] of Object.entries(stages)) {
-                            const stageDiv = createStageDiv(name, content);
-                            stagesContainer.appendChild(stageDiv);
+                            if (content) {
+                                const stageDiv = createStageDiv(name, content);
+                                stagesContainer.appendChild(stageDiv);
+                            }
                         }
                     }
                 } else {
                     outputDiv.className = 'output error';
-                    outputDiv.textContent = '❌ ' + result.error;
+                    outputDiv.textContent = '❌ Error de compilación\n\n' +
+                                          '─────────────────────\n' +
+                                          result.error + '\n\n' +
+                                          'Revisa tu código e intenta nuevamente.';
                 }
             } catch (error) {
                 outputDiv.className = 'output error';
-                outputDiv.textContent = '❌ Error de conexión: ' + error.message;
+                outputDiv.textContent = '❌ Error de conexión\n\n' +
+                                      '─────────────────────\n' +
+                                      error.message + '\n\n' +
+                                      'Verifica que el servidor esté ejecutándose.';
             }
         }
 
@@ -441,7 +1022,7 @@ end"></textarea>
             
             const header = document.createElement('div');
             header.className = 'stage-header';
-            header.textContent = '▼ ' + title;
+            header.textContent = '▶ ' + title;
             header.onclick = function() {
                 const contentDiv = stageDiv.querySelector('.stage-content');
                 contentDiv.classList.toggle('active');
@@ -463,16 +1044,161 @@ end"></textarea>
             document.getElementById('inputs').value = '';
             document.getElementById('show-stages').checked = false;
             document.getElementById('output').className = 'output';
-            document.getElementById('output').textContent = 'Esperando ejecución...';
+            document.getElementById('output').textContent = '💡 Esperando código para compilar...\n\nTip: Presiona Ctrl+Enter en el editor para compilar rápidamente.';
             document.getElementById('stages-container').classList.remove('active');
             document.getElementById('stages-container').innerHTML = '';
         }
         
         // Atajo de teclado Ctrl+Enter para compilar
-        document.getElementById('code-editor').addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'Enter') {
-                e.preventDefault();
-                compileCode();
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('code-editor').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    compileCode();
+                }
+            });
+        });
+        
+        // Funciones del tutorial
+        function showTutorial() {
+            document.getElementById('tutorial-overlay').classList.add('active');
+        }
+        
+        function skipTutorial() {
+            document.getElementById('tutorial-overlay').classList.remove('active');
+            localStorage.setItem('tutorialCompleted', 'true');
+        }
+        
+        function startTutorial() {
+            document.getElementById('tutorial-overlay').classList.remove('active');
+            tutorialActive = true;
+            currentStep = 0;
+            showStep(currentStep);
+        }
+        
+        function showStep(stepIndex) {
+            const step = tutorialSteps[stepIndex];
+            const tooltip = document.getElementById('tutorial-tooltip');
+            const element = document.getElementById(step.element);
+            
+            if (!element) {
+                console.error('Elemento no encontrado:', step.element);
+                return;
+            }
+            
+            // Limpiar highlights anteriores
+            document.querySelectorAll('.highlight-element').forEach(el => {
+                el.classList.remove('highlight-element');
+            });
+            
+            // Highlight elemento actual
+            element.classList.add('highlight-element');
+            
+            // Actualizar contenido del tooltip
+            document.getElementById('tooltip-step').textContent = `Paso ${stepIndex + 1}/${tutorialSteps.length}`;
+            document.getElementById('tooltip-title').textContent = step.title;
+            document.getElementById('tooltip-content').textContent = step.content;
+            
+            // Posicionar tooltip
+            positionTooltip(tooltip, element, step.position);
+            
+            // Actualizar botones
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const btnFinish = document.getElementById('btn-finish');
+            
+            if (stepIndex === 0) {
+                btnPrev.classList.add('btn-hidden');
+            } else {
+                btnPrev.classList.remove('btn-hidden');
+            }
+            
+            if (stepIndex === tutorialSteps.length - 1) {
+                btnNext.classList.add('btn-hidden');
+                btnFinish.classList.remove('btn-hidden');
+            } else {
+                btnNext.classList.remove('btn-hidden');
+                btnFinish.classList.add('btn-hidden');
+            }
+            
+            // Mostrar tooltip
+            tooltip.classList.add('active');
+            tooltip.className = 'tutorial-tooltip active ' + step.position;
+        }
+        
+        function positionTooltip(tooltip, element, position) {
+            const rect = element.getBoundingClientRect();
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            let top, left;
+            
+            switch(position) {
+                case 'top':
+                    top = rect.top - tooltipRect.height - 20;
+                    left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+                    break;
+                case 'bottom':
+                    top = rect.bottom + 20;
+                    left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+                    break;
+                case 'left':
+                    top = rect.top + (rect.height / 2) - (tooltipRect.height / 2);
+                    left = rect.left - tooltipRect.width - 20;
+                    break;
+                case 'right':
+                    top = rect.top + (rect.height / 2) - (tooltipRect.height / 2);
+                    left = rect.right + 20;
+                    break;
+            }
+            
+            // Ajustar si se sale de la pantalla
+            if (top < 10) top = 10;
+            if (left < 10) left = 10;
+            if (left + tooltipRect.width > window.innerWidth - 10) {
+                left = window.innerWidth - tooltipRect.width - 10;
+            }
+            
+            tooltip.style.top = top + 'px';
+            tooltip.style.left = left + 'px';
+        }
+        
+        function nextStep() {
+            if (currentStep < tutorialSteps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+        
+        function finishTutorial() {
+            tutorialActive = false;
+            document.getElementById('tutorial-tooltip').classList.remove('active');
+            document.querySelectorAll('.highlight-element').forEach(el => {
+                el.classList.remove('highlight-element');
+            });
+            localStorage.setItem('tutorialCompleted', 'true');
+        }
+        
+        // Reposicionar tooltip al hacer scroll o resize
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            if (tutorialActive && currentStep < tutorialSteps.length) {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    showStep(currentStep);
+                }, 100);
+            }
+        });
+        
+        window.addEventListener('scroll', function() {
+            if (tutorialActive && currentStep < tutorialSteps.length) {
+                showStep(currentStep);
             }
         });
     </script>
