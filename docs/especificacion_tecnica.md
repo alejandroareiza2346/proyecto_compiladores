@@ -274,11 +274,13 @@ Los mensajes de error incluyen contexto del código fuente con información de l
 **Clase**: `SymbolTable`
 
 **Atributos**:
+
 - `symbols`: Diccionario que mapea nombres de variables a objetos SymbolInfo
 
 **Clase**: `SymbolInfo`
 
 **Atributos**:
+
 - `name`: Identificador de variable
 - `initialized`: Bandera booleana
 
@@ -287,6 +289,7 @@ Los mensajes de error incluyen contexto del código fuente con información de l
 Análisis sensible al flujo que rastrea qué variables están garantizadas para ser inicializadas en cada punto del programa.
 
 **Algoritmo**:
+
 ```
 función analyze_block(statements, in_init_set):
     current_init = copia(in_init_set)
@@ -316,6 +319,7 @@ función analyze_statement(stmt, init_set):
 ### 4.4 GENERACIÓN DE ADVERTENCIAS
 
 Se emiten advertencias cuando:
+
 - Variable usada antes de la inicialización
 - Variable potencialmente no inicializada (ej., establecida solo en una rama de if-else)
 
@@ -326,12 +330,14 @@ Enfoque conservador: Si existe alguna ruta de ejecución donde la variable no es
 **Clase**: `SemanticAnalyzer`
 
 **Métodos**:
+
 - `analyze(program)`: Entrada principal, devuelve SemanticResult
 - `_analyze_block(body, in_init, allow_init_out)`: Análisis de bloque
 - `_analyze_stmt(stmt, init)`: Análisis de declaración única
 - `_check_expr(expr, init)`: Validación de expresión
 
 **Salida**: `SemanticResult` que contiene:
+
 - `table`: Tabla de símbolos final
 - `warnings`: Lista de mensajes de advertencia
 
@@ -360,6 +366,7 @@ fold(UnaryOp(op, e)) = UnaryOp(op, fold(e))
 ```
 
 **Operaciones Evaluadas**:
+
 - Aritméticas: `+`, `-`, `*`, `/` (división entera)
 - Relacionales: `<`, `>`, `<=`, `>=`
 - Igualdad: `==`, `!=`
@@ -369,12 +376,14 @@ fold(UnaryOp(op, e)) = UnaryOp(op, fold(e))
 ### 5.3 OPTIMIZACIÓN DE FLUJO DE CONTROL
 
 Si la condición es constante:
+
 - `if 0 { A } else { B }` → `B`
 - `if N { A } else { B }` → `A` (donde N ≠ 0)
 
 ### 5.4 DETALLES DE IMPLEMENTACIÓN
 
 **Funciones**:
+
 - `fold_constants_prog(program)`: Punto de entrada para optimización de programa
 - `fold_constants_expr(expr)`: Plegador de expresiones recursivo
 
@@ -396,6 +405,7 @@ IRInstr(op, a1, a2, res)
 ```
 
 Donde:
+
 - `op`: Código de operación
 - `a1`, `a2`: Operandos (pueden ser None)
 - `res`: Destino del resultado (puede ser None)
@@ -403,9 +413,11 @@ Donde:
 ### 6.2 CONJUNTO DE INSTRUCCIONES
 
 **Asignaciones**:
+
 - `assign src None dest`: dest = src
 
 **Aritméticas**:
+
 - `+ left right dest`: dest = left + right
 - `- left right dest`: dest = left - right
 - `* left right dest`: dest = left * right
@@ -413,6 +425,7 @@ Donde:
 - `uminus val None dest`: dest = -val
 
 **Relacionales**:
+
 - `< left right dest`: dest = (left < right)
 - `> left right dest`: dest = (left > right)
 - `<= left right dest`: dest = (left <= right)
@@ -421,11 +434,13 @@ Donde:
 - `!= left right dest`: dest = (left != right)
 
 **Flujo de Control**:
+
 - `label name None None`: Definir etiqueta
 - `goto label None None`: Salto incondicional
 - `ifnz cond label None`: Saltar si cond != 0
 
 **E/S**:
+
 - `read var None None`: Entrada a variable
 - `print val None None`: Salida de valor
 
@@ -488,11 +503,13 @@ Se traduce a:
 **Clase**: `IRGenerator`
 
 **Atributos**:
+
 - `temp_counter`: Contador de variables temporales
 - `label_counter`: Contador de etiquetas
 - `ir`: Lista de objetos IRInstr
 
 **Métodos**:
+
 - `generate(program)`: Convertir AST a IR
 - `new_temp()`: Asignar nuevo temporal
 - `new_label(base)`: Asignar nueva etiqueta
@@ -508,6 +525,7 @@ Se traduce a:
 ### 7.1 ARQUITECTURA OBJETIVO
 
 Arquitectura basada en acumulador con las siguientes características:
+
 - Registro acumulador único
 - Operandos basados en memoria
 - Sin registros de propósito general
@@ -515,16 +533,19 @@ Arquitectura basada en acumulador con las siguientes características:
 ### 7.2 ARQUITECTURA DEL CONJUNTO DE INSTRUCCIONES
 
 **Movimiento de Datos**:
+
 - `LOAD addr`: ACC = MEM[addr]
 - `STORE addr`: MEM[addr] = ACC
 
 **Aritméticas**:
+
 - `ADD addr`: ACC = ACC + MEM[addr]
 - `SUB addr`: ACC = ACC - MEM[addr]
 - `MUL addr`: ACC = ACC * MEM[addr]
 - `DIV addr`: ACC = ACC / MEM[addr] (división entera)
 
 **Flujo de Control**:
+
 - `JMP label`: Salto incondicional
 - `JLT label`: Saltar si ACC < 0
 - `JGT label`: Saltar si ACC > 0
@@ -534,10 +555,12 @@ Arquitectura basada en acumulador con las siguientes características:
 - `JNE label`: Saltar si ACC != 0
 
 **E/S**:
+
 - `IN addr`: MEM[addr] = read_input()
 - `OUT addr`: write_output(MEM[addr])
 
 **Especiales**:
+
 - `LABEL name`: Definir etiqueta (pseudo-instrucción)
 - `HALT`: Detener ejecución
 
@@ -595,11 +618,13 @@ Todos los nombres de variables y temporales se recopilan durante la generación 
 **Clase**: `ASMGenerator`
 
 **Atributos**:
+
 - `lines`: Lista de instrucciones de ensamblador
 - `syms`: Conjunto de nombres de símbolos
 - `consts`: Conjunto de valores constantes
 
 **Métodos**:
+
 - `generate(ir)`: Convertir IR a ensamblador
 - `_sym_for_const(value)`: Obtener/crear símbolo constante
 - `_use_sym(name)`: Registrar uso de símbolo
@@ -639,6 +664,7 @@ Rastrear posiciones de etiquetas (índice de instrucción).
 **Fase 2: Enlace**
 
 Resolver todos los nombres de operandos:
+
 - Etiquetas → direcciones de instrucción
 - Variables → direcciones de memoria
 - Temporales → direcciones de memoria
@@ -649,6 +675,7 @@ Resolver todos los nombres de operandos:
 Direcciones de memoria asignadas secuencialmente comenzando desde 0.
 
 Orden de asignación:
+
 1. Constantes (con valores de inicialización)
 2. Variables (ordenadas alfabéticamente)
 3. Temporales (ordenados numéricamente)
@@ -664,6 +691,7 @@ Los operandos de salto contienen el índice de instrucción objetivo.
 **Clase**: `MachineProgram`
 
 **Atributos**:
+
 - `code`: Array de bytecode
 - `sym_addrs`: Diccionario que mapea nombres de símbolos a direcciones de memoria
 - `mem_init`: Diccionario que mapea direcciones a valores iniciales
@@ -674,6 +702,7 @@ Los operandos de salto contienen el índice de instrucción objetivo.
 **Clase**: `Assembler`
 
 **Métodos**:
+
 - `assemble(asm_lines)`: Analizar ensamblador a instrucciones y etiquetas
 - `link(instrs, labels, syms, const_values)`: Resolver direcciones y generar bytecode
 
@@ -686,6 +715,7 @@ Los operandos de salto contienen el índice de instrucción objetivo.
 ### 9.1 ARQUITECTURA DE LA VM
 
 **Componentes**:
+
 - Contador de Programa (PC): Dirección de instrucción actual
 - Acumulador (ACC): Registro único para cálculos
 - Memoria (MEM): Array de enteros
@@ -709,6 +739,7 @@ mientras PC < longitud_código:
 ### 9.3 EJECUCIÓN DE INSTRUCCIONES
 
 **Operaciones de Datos**:
+
 - LOAD: `ACC = MEM[operando]`
 - STORE: `MEM[operando] = ACC`
 - ADD: `ACC = ACC + MEM[operando]`
@@ -717,6 +748,7 @@ mientras PC < longitud_código:
 - DIV: `ACC = ACC / MEM[operando]` (lanza excepción si MEM[operando] == 0)
 
 **Operaciones de Control**:
+
 - JMP: `PC = operando * 2` (convertir índice de instrucción a desplazamiento de bytes)
 - JLT: `si ACC < 0: PC = operando * 2`
 - JGT: `si ACC > 0: PC = operando * 2`
@@ -726,10 +758,12 @@ mientras PC < longitud_código:
 - JNE: `si ACC != 0: PC = operando * 2`
 
 **Operaciones de E/S**:
+
 - IN: `MEM[operando] = proveedor_entrada()`
 - OUT: `buffer_salida.append(MEM[operando])`
 
 **Especiales**:
+
 - HALT: Terminar ejecución
 
 ### 9.4 INICIALIZACIÓN DE MEMORIA
@@ -741,12 +775,14 @@ Tamaño determinado por la dirección asignada más alta + 1.
 ### 9.5 MECANISMO DE ENTRADA
 
 Entrada proporcionada mediante función invocable. Dos modos:
+
 1. Interactivo: Leer desde stdin
 2. Por lotes: Leer desde lista pre-suministrada
 
 ### 9.6 MODO DE RASTREO
 
 El rastreo de ejecución opcional registra después de cada instrucción:
+
 - Valor de PC
 - Opcode y operando
 - Valor del acumulador
@@ -755,6 +791,7 @@ El rastreo de ejecución opcional registra después de cada instrucción:
 ### 9.7 MANEJO DE ERRORES
 
 Errores en tiempo de ejecución:
+
 - División por cero
 - Opcode desconocido
 - Agotamiento de entrada (en modo por lotes)
@@ -764,6 +801,7 @@ Errores en tiempo de ejecución:
 **Clase**: `VM`
 
 **Atributos**:
+
 - `code`: Array de bytecode
 - `pc`: Contador de programa
 - `acc`: Acumulador
@@ -773,11 +811,13 @@ Errores en tiempo de ejecución:
 - `input_provider`: Función de entrada
 
 **Métodos**:
+
 - `run()`: Ejecutar programa, devolver VMResult
 
 **Clase**: `VMResult`
 
 **Atributos**:
+
 - `outputs`: Lista de valores de salida
 - `trace`: Rastreo de ejecución opcional
 
@@ -828,6 +868,7 @@ def compile_pipeline(source_code, optimize, run, inputs, emit, trace_ir, trace_a
 ### 10.2 INTERFAZ DE LÍNEA DE COMANDOS
 
 **Argumentos**:
+
 - `file`: Ruta del archivo fuente (requerido)
 - `--no-opt`: Deshabilitar optimizaciones
 - `--emit STAGE`: Emitir salida de etapa específica
@@ -840,6 +881,7 @@ def compile_pipeline(source_code, optimize, run, inputs, emit, trace_ir, trace_a
 - `--inputs N1 N2 ...`: Proporcionar valores de entrada
 
 **Etapas para --emit**:
+
 - `tokens`: Flujo de tokens
 - `ast`: Árbol de sintaxis abstracta
 - `ir`: Representación intermedia
@@ -849,11 +891,13 @@ def compile_pipeline(source_code, optimize, run, inputs, emit, trace_ir, trace_a
 ### 10.3 MANEJO DE ERRORES
 
 Errores de compilación capturados y reportados:
+
 - `LexError`: Fallo de análisis léxico
 - `ParseError`: Fallo de análisis sintáctico
 - `SemanticError`: Fallo de validación semántica
 
 Códigos de salida:
+
 - 0: Éxito
 - 1: Error de compilación
 - 2: Error inesperado (error interno)
@@ -861,13 +905,16 @@ Códigos de salida:
 ### 10.4 MODOS DE SALIDA
 
 **Modo Interactivo** (sin --emit):
+
 - Si `--run`: Imprimir salidas del programa línea por línea
 - De lo contrario: Sin salida (solo verificación de compilación)
 
 **Modo Emit** (--emit STAGE):
+
 - Imprimir etapa solicitada a stdout
 
 **Modo Emit-All** (--emit-all):
+
 - Escribir todas las etapas en archivos separados en `--out-dir`
 - Archivos: tokens.txt, ast.txt, ir.txt, asm.txt, machine.txt
 
@@ -882,6 +929,7 @@ Códigos de salida:
 Aplicación web basada en Flask que proporciona interfaz de compilador accesible desde el navegador.
 
 **Rutas**:
+
 - `GET /`: Página principal (sirve index.html)
 - `POST /compile`: Endpoint de compilación
 - `GET /examples`: Cargar programas de ejemplo
@@ -924,6 +972,7 @@ Aplicación web basada en Flask que proporciona interfaz de compilador accesible
 ### 11.3 ENDPOINT DE EJEMPLOS
 
 Devuelve objeto JSON con 5 programas de ejemplo preconfigurados:
+
 - program1: Demostración completa de características
 - program2: If-else anidado
 - program3: While con cero iteraciones
@@ -931,6 +980,7 @@ Devuelve objeto JSON con 5 programas de ejemplo preconfigurados:
 - program5: Echo de E/S
 
 Cada ejemplo incluye:
+
 - `name`: Nombre de visualización
 - `code`: Código fuente
 - `inputs`: Valores de entrada
@@ -941,6 +991,7 @@ Cada ejemplo incluye:
 **Archivo**: `templates/index.html`
 
 Aplicación de una sola página con:
+
 - Editor de código (textarea)
 - Campo de entrada para valores de lectura
 - Casilla de verificación para visualización de etapas
@@ -951,6 +1002,7 @@ Aplicación de una sola página con:
 - Paneles de etapas colapsables
 
 **Funciones JavaScript**:
+
 - `loadExamples()`: Obtener y poblar botones de ejemplo
 - `loadExample(example)`: Cargar ejemplo en el editor
 - `compileCode()`: Enviar solicitud de compilación al backend
@@ -958,6 +1010,7 @@ Aplicación de una sola página con:
 - `clearAll()`: Reiniciar interfaz
 
 **Atajos de Teclado**:
+
 - Ctrl+Enter: Compilar y ejecutar
 
 ---
@@ -969,21 +1022,25 @@ Aplicación de una sola página con:
 ### 12.1 MÓDULOS DE PRUEBA
 
 **test_lexer.py**:
+
 - Reconocimiento básico de tokens
 - Manejo de comentarios
 - Seguimiento de posición
 - Detección de errores (caracteres inválidos)
 
 **test_parser.py**:
+
 - Análisis de programa mínimo
 - Estructuras de declaración y bloque
 - Detección de errores (punto y coma faltante)
 
 **test_semantic.py**:
+
 - Generación de advertencia de inicialización
 - Variables adecuadamente inicializadas (sin advertencias)
 
 **test_ir_vm.py**:
+
 - Prueba de pipeline de extremo a extremo
 - Verificación de ejecución del programa
 - Validación de salida
@@ -1003,12 +1060,14 @@ Todas las pruebas deben pasar antes del despliegue.
 ### 13.1 ESTRUCTURA DEL PAQUETE
 
 **pyproject.toml**:
+
 - Metadatos del proyecto
 - Requisito de versión de Python: >=3.10
 - Punto de entrada: comando `minilangc`
 - Sistema de construcción: setuptools
 
 **requirements.txt**:
+
 - Flask >=3.1.0
 - pytest >=8.4.0
 
@@ -1026,6 +1085,7 @@ El modo editable (`-e`) permite el desarrollo sin reinstalación.
 **Archivo**: `.github/workflows/ci.yml`
 
 Flujo de trabajo de GitHub Actions:
+
 - Disparador: Push o pull request a la rama main
 - Plataforma: Windows
 - Versiones de Python: 3.10, 3.11, 3.12, 3.13
@@ -1072,18 +1132,21 @@ Flujo de trabajo de GitHub Actions:
 ### 14.4 DECISIONES ARQUITECTÓNICAS
 
 **Acumulador vs Máquina de Registros**:
+
 - Acumulador elegido por simplicidad
 - Reduce complejidad de instrucciones
 - Elimina fase de asignación de registros
 - Compensación: Más operaciones de memoria
 
 **TAC como IR**:
+
 - Formato simple de tres direcciones
 - Fácil de generar desde AST
 - Traducción directa a ensamblador
 - Representación independiente de plataforma
 
 **Máquina Virtual vs Código Nativo**:
+
 - VM proporciona portabilidad
 - Implementación más simple
 - Depuración más fácil
@@ -1096,6 +1159,7 @@ Flujo de trabajo de GitHub Actions:
 ### 15.1 MEJORAS POTENCIALES
 
 **Características del Lenguaje**:
+
 - Tipos de datos adicionales (float, string, boolean)
 - Arrays e indexación
 - Funciones con parámetros y valores de retorno
@@ -1105,6 +1169,7 @@ Flujo de trabajo de GitHub Actions:
 - Declaraciones break/continue
 
 **Optimización**:
+
 - Propagación de constantes
 - Eliminación de código muerto
 - Eliminación de subexpresiones comunes
@@ -1113,12 +1178,14 @@ Flujo de trabajo de GitHub Actions:
 - Optimización de mirilla
 
 **Generación de Código**:
+
 - Asignación de registros
 - Programación de instrucciones
 - Generación de código nativo (x86, ARM)
 - Backend LLVM
 
 **Análisis**:
+
 - Inferencia de tipos
 - Análisis de flujo de datos
 - Construcción de grafo de flujo de control
@@ -1126,6 +1193,7 @@ Flujo de trabajo de GitHub Actions:
 - Definiciones alcanzables
 
 **Herramientas**:
+
 - Depurador con puntos de interrupción
 - Perfilador para análisis de rendimiento
 - Visualización de AST/CFG
@@ -1136,6 +1204,7 @@ Flujo de trabajo de GitHub Actions:
 ## FIN DEL DOCUMENTO
 
 **Control del Documento**:
+
 - Clasificación: Especificación Técnica
 - Distribución: Equipo del Proyecto
 - Última Actualización: Noviembre 2025
