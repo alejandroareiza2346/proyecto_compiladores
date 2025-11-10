@@ -312,7 +312,6 @@ función analyze_statement(stmt, init_set):
         check_expression(stmt.cond, init_set)
         analyze_block(stmt.body, init_set)  // No propagar (bucle puede no ejecutarse)
     retornar init_set
-```
 
 ### 4.4 GENERACIÓN DE ADVERTENCIAS
 
@@ -354,14 +353,12 @@ Implementación actual: Plegado de constantes a nivel de AST
 Recorrido ascendente del AST, evaluando expresiones constantes en tiempo de compilación.
 
 **Reglas**:
-```
 fold(Number(n)) = Number(n)
 fold(Var(x)) = Var(x)
 fold(BinaryOp(Number(a), op, Number(b))) = Number(eval(a op b))
 fold(BinaryOp(e1, op, e2)) = BinaryOp(fold(e1), op, fold(e2))
 fold(UnaryOp('-', Number(n))) = Number(-n)
 fold(UnaryOp(op, e)) = UnaryOp(op, fold(e))
-```
 
 **Operaciones Evaluadas**:
 
@@ -398,9 +395,7 @@ Si la condición es constante:
 Representación de Código de Tres Direcciones (TAC). Cada instrucción tiene como máximo tres operandos.
 
 **Formato de Instrucción**:
-```
 IRInstr(op, a1, a2, res)
-```
 
 Donde:
 
@@ -449,7 +444,6 @@ Temporales generados con nombres secuenciales: `t1`, `t2`, `t3`, ...
 Cada resultado de subexpresión almacenado en un temporal.
 
 Ejemplo:
-```
 c = a + b * 2
 
 Genera:
@@ -457,7 +451,6 @@ Genera:
   t2 = b * t1
   t3 = a + t2
   c = t3
-```
 
 ### 6.4 GENERACIÓN DE ETIQUETAS
 
@@ -468,7 +461,6 @@ Etiqueta especial: `END` marca la terminación del programa.
 ### 6.5 TRADUCCIÓN DE FLUJO DE CONTROL
 
 **If-Else**:
-```
 if COND { THEN } else { ELSE }
 
 Se traduce a:
@@ -479,10 +471,7 @@ Se traduce a:
   label L_true
   THEN_code
   label L_end
-```
-
 **While**:
-```
 while COND { BODY }
 
 Se traduce a:
@@ -494,7 +483,6 @@ Se traduce a:
   BODY_code
   goto L_start
   label L_end
-```
 
 ### 6.6 DETALLES DE IMPLEMENTACIÓN
 
@@ -565,27 +553,22 @@ Arquitectura basada en acumulador con las siguientes características:
 ### 7.3 TRADUCCIÓN DE IR A ENSAMBLADOR
 
 **Operaciones Binarias**:
-```
 IR: t3 = t1 + t2
 
 Ensamblador:
   LOAD t1
   ADD t2
   STORE t3
-```
 
 **Menos Unario**:
-```
 IR: t2 = -t1
 
 Ensamblador:
   LOAD const_0
   SUB t1
   STORE t2
-```
 
 **Operaciones Relacionales**:
-```
 IR: t3 = t1 < t2
 
 Ensamblador:
@@ -599,7 +582,6 @@ Ensamblador:
   LOAD const_1
   STORE t3
   LABEL L_end
-```
 
 ### 7.4 MANEJO DE CONSTANTES
 
@@ -644,21 +626,17 @@ Cada instrucción ocupa dos ranuras de array.
 
 ### 8.2 MAPEO DE OPCODES
 
-```
 LOAD:  1    STORE: 2    ADD:   3    SUB:   4
 MUL:   5    DIV:   6    JMP:   7    JLT:   8
 JGT:   9    JLE:   10   JGE:   11   JEQ:   12
 JNE:   13   IN:    14   OUT:   15   HALT:  16
-```
 
 ### 8.3 PROCESO DE ENSAMBLADO
 
 **Fase 1: Recopilación de Instrucciones**
-
-Analizar texto de ensamblador, construir lista de instrucciones con opcodes y nombres de operandos.
+Analizar líneas de ensamblador para construir lista de instrucciones con opcodes y nombres de operandos.
 
 Rastrear posiciones de etiquetas (índice de instrucción).
-
 **Fase 2: Enlace**
 
 Resolver todos los nombres de operandos:
@@ -722,7 +700,7 @@ Los operandos de salto contienen el índice de instrucción objetivo.
 
 ### 9.2 CICLO DE EJECUCIÓN
 
-```
+```python
 mientras PC < longitud_código:
     opcode = código[PC]
     operando = código[PC + 1]
@@ -935,6 +913,7 @@ Aplicación web basada en Flask que proporciona interfaz de compilador accesible
 ### 11.2 ENDPOINT DE COMPILACIÓN
 
 **Formato de Solicitud** (JSON):
+
 ```json
 {
     "code": "cadena de código fuente",
@@ -944,6 +923,7 @@ Aplicación web basada en Flask que proporciona interfaz de compilador accesible
 ```
 
 **Formato de Respuesta** (JSON):
+
 ```json
 {
     "success": true,
@@ -960,6 +940,7 @@ Aplicación web basada en Flask que proporciona interfaz de compilador accesible
 ```
 
 **Respuesta de Error**:
+
 ```json
 {
     "success": false,
