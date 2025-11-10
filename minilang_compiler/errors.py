@@ -1,8 +1,6 @@
 """
 MÓDULO DE FORMATEO DE ERRORES
-Proyecto: Compilador MiniLang
-Universidad: [Nombre de la Universidad]
-Curso: Compiladores
+
 
 PROPÓSITO:
 Proporciona funciones utilitarias para formatear mensajes de error de manera legible,

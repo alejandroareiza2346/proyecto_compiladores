@@ -289,7 +289,6 @@ Análisis sensible al flujo que rastrea qué variables están garantizadas para 
 
 **Algoritmo**:
 
-```
 función analyze_block(statements, in_init_set):
     current_init = copia(in_init_set)
     para cada stmt en statements:

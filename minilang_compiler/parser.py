@@ -1,8 +1,5 @@
 """
 MÓDULO DE ANÁLISIS SINTÁCTICO (PARSER)
-Proyecto: Compilador MiniLang
-Universidad: [Nombre de la Universidad]
-Curso: Compiladores
 
 PROPÓSITO:
 Implementa la segunda fase de compilación: el análisis sintáctico.

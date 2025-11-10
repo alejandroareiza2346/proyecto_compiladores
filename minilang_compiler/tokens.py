@@ -1,8 +1,6 @@
 """
 MÓDULO DE DEFINICIÓN DE TOKENS
-Proyecto: Compilador MiniLang
-Universidad: [Nombre de la Universidad]
-Curso: Compiladores
+
 
 PROPÓSITO:
 Este módulo define los tipos de tokens (lexemas) reconocidos por el analizador léxico.

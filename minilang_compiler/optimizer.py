@@ -1,7 +1,28 @@
+"""
+================================================================================
+Archivo: optimizer.py
+--------------------------------------------------------------------------------
+Este módulo implementa la optimización de expresiones y sentencias en el AST
+(Abstract Syntax Tree) del compilador MiniLang. La optimización principal es el
+folding de constantes: simplifica expresiones que pueden resolverse en tiempo de
+compilación.
+
+
+================================================================================
+
+Estructura principal:
+- fold_constants_expr: Simplifica expresiones constantes en el AST.
+- fold_constants_prog: Aplica la optimización a todo el programa.
+
+Ejemplo de uso:
+    programa_optimizado = fold_constants_prog(program_ast)
+"""
 from __future__ import annotations
 from typing import List, Union
 from .ast_nodes import *
 
+# Simplifica expresiones constantes en el AST
+# Ejemplo: 2 + 3 -> 5, 4 * (1 + 1) -> 8
 
 def fold_constants_expr(expr: Expr) -> Expr:
     if isinstance(expr, Number) or isinstance(expr, Var):
@@ -16,10 +37,11 @@ def fold_constants_expr(expr: Expr) -> Expr:
         right = fold_constants_expr(expr.right)
         if isinstance(left, Number) and isinstance(right, Number):
             a, b = left.value, right.value
+            # Operaciones aritméticas y relacionales
             if expr.op == '+': return Number(a + b)
             if expr.op == '-': return Number(a - b)
             if expr.op == '*': return Number(a * b)
-            if expr.op == '/': return Number(a // b)  # integer division
+            if expr.op == '/': return Number(a // b)  # división entera
             if expr.op == '==': return Number(1 if a == b else 0)
             if expr.op == '!=': return Number(1 if a != b else 0)
             if expr.op == '<': return Number(1 if a < b else 0)
@@ -27,9 +49,9 @@ def fold_constants_expr(expr: Expr) -> Expr:
             if expr.op == '<=': return Number(1 if a <= b else 0)
             if expr.op == '>=': return Number(1 if a >= b else 0)
         return BinaryOp(left, expr.op, right)
-    raise RuntimeError(f"Unknown expression type: {type(expr)}")
+    raise RuntimeError(f"Tipo de expresión desconocido: {type(expr)}")
 
-
+# Aplica la optimización a todo el programa (AST)
 def fold_constants_prog(program: Program) -> Program:
     def fold_stmt(stmt: Stmt) -> Stmt:
         if isinstance(stmt, Read):
@@ -42,7 +64,7 @@ def fold_constants_prog(program: Program) -> Program:
             cond = fold_constants_expr(stmt.cond)
             then_body = [fold_stmt(s) for s in stmt.then_body]
             else_body = [fold_stmt(s) for s in stmt.else_body]
-            # Optional: if condition is constant, select branch
+            # Si la condición es constante, selecciona la rama correspondiente
             if isinstance(cond, Number):
                 if cond.value != 0:
                     return Block(then_body)
@@ -57,7 +79,7 @@ def fold_constants_prog(program: Program) -> Program:
             return Block([fold_stmt(s) for s in stmt.stmts])
         return stmt
 
-    # Introduce a simple Block node to allow branch selection
+    # Nodo auxiliar para agrupar sentencias optimizadas
     @dataclass
     class Block(Stmt):
         stmts: List[Stmt]
@@ -70,3 +92,4 @@ def fold_constants_prog(program: Program) -> Program:
         else:
             new_body.append(s2)
     return Program(new_body)
+# FIN DEL ARCHIVO

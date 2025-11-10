@@ -1,3 +1,23 @@
+"""
+================================================================================
+Archivo: compiler.py
+--------------------------------------------------------------------------------
+Este módulo es el orquestador principal del compilador MiniLang.
+Coordina todas las fases: análisis léxico, sintáctico, semántico, optimización,
+generación de código intermedio, ensamblador, máquina y ejecución en VM.
+
+Permite compilar, analizar y ejecutar programas MiniLang desde línea de comandos.
+
+
+================================================================================
+
+Estructura principal:
+- Función compile_pipeline: Ejecuta todas las fases del compilador.
+- Función main: Interfaz CLI para compilar y ejecutar archivos MiniLang.
+
+Ejemplo de uso:
+    python compiler.py programa.minilang --run --trace-asm
+"""
 from __future__ import annotations
 import argparse
 import sys
@@ -16,44 +36,57 @@ from .runtime_vm import VM
 
 
 def compile_pipeline(source_code: str, optimize: bool = True, run: bool = False, inputs: List[int] | None = None, emit: str | None = None, trace_ir: bool = False, trace_asm: bool = False, trace_vm: bool = False, out_dir: Path | None = None):
-    # Lexing
+    """
+    Ejecuta todas las fases del compilador MiniLang sobre el código fuente.
+    Parámetros:
+        - source_code: Código fuente MiniLang
+        - optimize: Aplica optimizaciones (folding de constantes)
+        - run: Ejecuta el programa en la VM
+        - inputs: Lista de valores para instrucciones 'read'
+        - emit: Permite emitir una fase específica ('tokens', 'ast', 'ir', 'asm', 'machine')
+        - trace_ir, trace_asm, trace_vm: Imprime trazas de cada fase
+        - out_dir: Carpeta para guardar artefactos
+    Retorna:
+        - Diccionario con resultados de cada fase
+    """
+    # Fase 1: Análisis léxico (tokenización)
     lexer = Lexer(source_code)
     tokens: List[Token] = lexer.tokenize()
 
-    # Parsing
+    # Fase 2: Análisis sintáctico (parsing)
     parser = Parser(tokens, source=source_code)
     program = parser.parse()
 
-    # Optimize (AST-level)
+    # Fase 3: Optimización a nivel de AST
     if optimize:
         program = fold_constants_prog(program)
 
-    # Semantic analysis
+    # Fase 4: Análisis semántico
     sema = SemanticAnalyzer()
     sem_res = sema.analyze(program)
 
-    # IR generation
+    # Fase 5: Generación de código intermedio (IR)
     irgen = IRGenerator()
     ir = irgen.generate(program)
     if trace_ir:
-        # attach IR trace to results (also printed)
         for ins in ir:
             print(ins)
 
-    # ASM generation
+    # Fase 6: Generación de ensamblador
     asmgen = ASMGenerator()
     asm_lines, syms, consts = asmgen.generate(ir)
     if trace_asm:
         for l in asm_lines:
             print(l)
 
-    # Machine code generation
+    # Fase 7: Generación de código máquina
     assembler = Assembler()
     instrs, labels, collected_syms = assembler.assemble(asm_lines)
-    # Merge constants mapping values
+    # Mapeo de constantes
     const_values = {f"const_{v}": v for v in consts}
     mprog = assembler.link(instrs, labels, collected_syms, const_values)
 
+    # Diccionario de resultados por fase
     results = {
         'tokens': tokens,
         'ast': program,
@@ -63,7 +96,7 @@ def compile_pipeline(source_code: str, optimize: bool = True, run: bool = False,
         'machine': mprog,
     }
 
-    # Write artifacts if out_dir specified
+    # Guardar artefactos en disco si se especifica out_dir
     if out_dir:
         out_dir.mkdir(parents=True, exist_ok=True)
         # tokens
@@ -91,7 +124,7 @@ def compile_pipeline(source_code: str, optimize: bool = True, run: bool = False,
         return results.get(emit)
 
     if run:
-        # Prepare input provider if inputs provided
+        # Proveedor de entrada para la VM
         it = iter(inputs) if inputs else None
         def provider():
             if it is None:
@@ -99,7 +132,7 @@ def compile_pipeline(source_code: str, optimize: bool = True, run: bool = False,
             try:
                 return int(next(it))
             except StopIteration:
-                raise RuntimeError('Not enough input values provided to VM')
+                raise RuntimeError('No hay suficientes valores de entrada para la VM')
         vm = VM(mprog.code, memory_size=(max(mprog.sym_addrs.values())+1 if mprog.sym_addrs else 1), mem_init=mprog.mem_init, input_provider=provider, trace=trace_vm)
         result = vm.run()
         if trace_vm and result.trace is not None:
@@ -111,17 +144,21 @@ def compile_pipeline(source_code: str, optimize: bool = True, run: bool = False,
 
 
 def main():
+    """
+    Interfaz de línea de comandos para compilar y ejecutar programas MiniLang.
+    Permite seleccionar fases, emitir artefactos y ejecutar en la VM.
+    """
     parser = argparse.ArgumentParser(description='MiniLang Compiler')
-    parser.add_argument('file', help='MiniLang source file')
-    parser.add_argument('--no-opt', action='store_true', help='Disable optimizations')
-    parser.add_argument('--emit', choices=['tokens','ast','ir','asm','machine'], help='Emit specific stage and exit')
-    parser.add_argument('--emit-all', action='store_true', help='Write all stages to files in --out-dir')
-    parser.add_argument('--out-dir', type=str, help='Directory to write artifacts (used with --emit-all)')
-    parser.add_argument('--run', action='store_true', help='Run the program on the VM after compilation')
-    parser.add_argument('--trace-ir', action='store_true', help='Print IR after generation')
-    parser.add_argument('--trace-asm', action='store_true', help='Print assembly after generation')
-    parser.add_argument('--trace-vm', action='store_true', help='Trace VM execution (print per-instruction snapshots)')
-    parser.add_argument('--inputs', nargs='*', type=int, help='Provide input integers for read statements')
+    parser.add_argument('file', help='Archivo fuente MiniLang')
+    parser.add_argument('--no-opt', action='store_true', help='Desactivar optimizaciones')
+    parser.add_argument('--emit', choices=['tokens','ast','ir','asm','machine'], help='Emitir una fase específica y salir')
+    parser.add_argument('--emit-all', action='store_true', help='Guardar todas las fases en archivos en --out-dir')
+    parser.add_argument('--out-dir', type=str, help='Directorio para guardar artefactos (usado con --emit-all)')
+    parser.add_argument('--run', action='store_true', help='Ejecutar el programa en la VM tras compilar')
+    parser.add_argument('--trace-ir', action='store_true', help='Imprimir IR tras generarlo')
+    parser.add_argument('--trace-asm', action='store_true', help='Imprimir ensamblador tras generarlo')
+    parser.add_argument('--trace-vm', action='store_true', help='Trazar ejecución de la VM (imprimir cada instrucción)')
+    parser.add_argument('--inputs', nargs='*', type=int, help='Valores de entrada para instrucciones read')
     args = parser.parse_args()
 
     with open(args.file, 'r', encoding='utf-8') as f:
@@ -130,19 +167,20 @@ def main():
     out_dir = None
     if args.emit_all:
         if not args.out_dir:
-            print("Error: --emit-all requires --out-dir", file=sys.stderr)
+            print("Error: --emit-all requiere --out-dir", file=sys.stderr)
             sys.exit(1)
         out_dir = Path(args.out_dir)
 
     try:
         out = compile_pipeline(source_code=source, optimize=not args.no_opt, run=args.run, inputs=args.inputs, emit=args.emit, trace_ir=args.trace_ir, trace_asm=args.trace_asm, trace_vm=args.trace_vm, out_dir=out_dir)
     except (LexError, ParseError, SemanticError) as e:
-        print(f"Compilation error: {e}", file=sys.stderr)
+        print(f"Error de compilación: {e}", file=sys.stderr)
         sys.exit(1)
     except Exception as e:
-        print(f"Unexpected error: {e}", file=sys.stderr)
+        print(f"Error inesperado: {e}", file=sys.stderr)
         sys.exit(2)
 
+    # Emisión de artefactos por fase
     if args.emit:
         if args.emit == 'tokens' and isinstance(out, list):
             for t in out:
@@ -169,3 +207,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+# FIN DEL ARCHIVO

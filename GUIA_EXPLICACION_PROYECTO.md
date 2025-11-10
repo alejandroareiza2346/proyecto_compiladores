@@ -5,7 +5,9 @@
 Este proyecto es un **compilador completo** para un lenguaje de programación simple llamado MiniLang. Un compilador es un programa que traduce código escrito en un lenguaje de programación a código que la computadora puede ejecutar.
 
 ### Analogía Simple
+
 Imagina que el compilador es como un traductor:
+
 - **Entrada**: Código en MiniLang (lenguaje humano)
 - **Salida**: Instrucciones que una máquina virtual puede ejecutar
 
@@ -15,7 +17,6 @@ Imagina que el compilador es como un traductor:
 
 El compilador tiene **8 fases principales** que trabajan en secuencia:
 
-```
 Código Fuente (texto)
     ↓
 [1. LEXER] → Tokens
@@ -40,16 +41,19 @@ Código Fuente (texto)
 ## EXPLICACIÓN FASE POR FASE
 
 ### FASE 1: LEXER (Análisis Léxico)
+
 **Archivo**: `lexer.py`
 
 **¿Qué hace?**
 Convierte el texto del programa en "tokens" (piezas significativas).
 
 **Analogía**: Como cuando lees una oración y separas las palabras:
+
 - Texto: `"x = 5 + 3"`
 - Tokens: `[IDENT("x"), ASSIGN("="), NUMBER("5"), PLUS("+"), NUMBER("3")]`
 
 **Puntos clave para explicar**:
+
 1. Lee el código carácter por carácter
 2. Identifica patrones (números, identificadores, operadores)
 3. Ignora espacios y comentarios
@@ -59,26 +63,31 @@ Convierte el texto del programa en "tokens" (piezas significativas).
 ```
 Entrada: "read x; print x;"
 Salida: 
-  - Token(READ, "read", línea=1, col=1)
+
+- Token(READ, "read", línea=1, col=1)
   - Token(IDENT, "x", línea=1, col=6)
   - Token(SEMI, ";", línea=1, col=7)
   - Token(PRINT, "print", línea=1, col=9)
   - Token(IDENT, "x", línea=1, col=15)
   - Token(SEMI, ";", línea=1, col=16)
+
 ```
 
 ---
 
 ### FASE 2: PARSER (Análisis Sintáctico)
+
 **Archivo**: `parser.py`
 
 **¿Qué hace?**
 Convierte la lista de tokens en un árbol que representa la estructura del programa.
 
 **Analogía**: Como analizar la gramática de una oración:
+
 - "Juan come manzanas" → [Sujeto: Juan] [Verbo: come] [Objeto: manzanas]
 
 **Puntos clave para explicar**:
+
 1. Verifica que los tokens sigan las reglas de gramática del lenguaje
 2. Construye un Árbol de Sintaxis Abstracta (AST)
 3. Maneja precedencia de operadores (ej: `*` antes que `+`)
@@ -107,23 +116,23 @@ AST correcto:
       right=Number(4)
     )
   )
-Resultado: 2 + (3 * 4) = 14
-```
-
----
+Resultado: 2 + (3 * 4) = 14```
 
 ### FASE 3: SEMANTIC (Análisis Semántico)
+
 **Archivo**: `semantic.py`
 
 **¿Qué hace?**
 Verifica que el programa tenga sentido lógico (que las variables se usen correctamente).
 
 **Analogía**: Como revisar que una oración tenga sentido lógico:
+
 - ✓ "El gato come pescado" (correcto)
 - ✗ "El come gato pescado" (sintaxis incorrecta)
 - ✗ "Uso el coche antes de comprarlo" (error semántico)
 
 **Puntos clave para explicar**:
+
 1. **Tabla de símbolos**: Registra todas las variables del programa
 2. **Análisis de inicialización**: Verifica que las variables se asignen antes de usarse
 3. **Análisis de flujo**: Rastrea qué variables están inicializadas en cada punto del código
@@ -159,6 +168,7 @@ print y;  // ⚠️ Warning: y puede no estar inicializada
 ---
 
 ### FASE 4: OPTIMIZER (Optimización)
+
 **Archivo**: `optimizer.py`
 
 **¿Qué hace?**
@@ -167,6 +177,7 @@ Mejora el código eliminando cálculos innecesarios.
 **Técnica principal: Plegado de Constantes (Constant Folding)**
 
 **Puntos clave para explicar**:
+
 1. Evalúa expresiones constantes en tiempo de compilación
 2. Simplifica el código resultante
 3. Reduce el trabajo en tiempo de ejecución
@@ -208,6 +219,7 @@ No se puede optimizar porque a y b son variables (valores desconocidos)
 ---
 
 ### FASE 5: IR GENERATOR (Generación de Código Intermedio)
+
 **Archivo**: `ir.py`
 
 **¿Qué hace?**
@@ -219,6 +231,7 @@ resultado = operando1 operador operando2
 ```
 
 **Puntos clave para explicar**:
+
 1. Simplifica expresiones complejas usando variables temporales
 2. Convierte estructuras de control (if, while) en saltos con etiquetas
 3. Es independiente de la arquitectura (puede usarse para diferentes máquinas)
@@ -289,16 +302,19 @@ IR:
 ---
 
 ### FASE 6: ASM GENERATOR (Generación de Ensamblador)
+
 **Archivo**: `codegen_asm.py`
 
 **¿Qué hace?**
 Convierte el código intermedio a ensamblador para una máquina virtual basada en acumulador.
 
 **Concepto clave: Máquina de Acumulador**
+
 - Tiene UN solo registro (el acumulador)
 - Todas las operaciones usan el acumulador
 
 **Instrucciones principales**:
+
 - `LOAD x`: Cargar valor de memoria en acumulador
 - `STORE x`: Guardar acumulador en memoria
 - `ADD x`: Sumar memoria al acumulador
@@ -358,6 +374,7 @@ Ensamblador:
 ---
 
 ### FASE 7: MACHINE CODE (Generación de Código Máquina)
+
 **Archivo**: `codegen_machine.py`
 
 **¿Qué hace?**
@@ -378,6 +395,7 @@ JNE:  13    IN:   14    OUT:  15    HALT: 16
 ```
 
 **Puntos clave para explicar**:
+
 1. **Fase de ensamblado**: Convierte texto a instrucciones
 2. **Fase de enlace**: Asigna direcciones de memoria y resuelve etiquetas
 3. **Asignación de memoria**: Variables, temporales y constantes
@@ -405,12 +423,14 @@ Asignación de memoria:
 ---
 
 ### FASE 8: VIRTUAL MACHINE (Máquina Virtual)
+
 **Archivo**: `runtime_vm.py`
 
 **¿Qué hace?**
 Ejecuta el bytecode simulando una computadora simple.
 
 **Componentes de la VM**:
+
 - **PC (Program Counter)**: Apunta a la instrucción actual
 - **ACC (Acumulador)**: Registro para cálculos
 - **MEM (Memoria)**: Array para variables
@@ -539,7 +559,9 @@ Output: 10
 ## PREGUNTAS FRECUENTES Y CÓMO RESPONDERLAS
 
 ### P1: "¿Por qué necesitamos tantas fases?"
+
 **R**: Cada fase tiene una responsabilidad específica:
+
 - Lexer: Reconocer caracteres
 - Parser: Verificar estructura
 - Semantic: Verificar significado
@@ -552,23 +574,30 @@ Output: 10
 Es como cocinar: comprar ingredientes → lavar → cortar → cocinar → servir
 
 ### P2: "¿Por qué usamos código intermedio?"
+
 **R**: 
+
 1. Simplifica optimizaciones
 2. Permite generar código para diferentes arquitecturas
 3. Separa análisis de generación de código
 
 ### P3: "¿Qué es un acumulador?"
+
 **R**: Un registro especial donde se hacen todos los cálculos.
 Analogía: Una calculadora donde el resultado queda en pantalla.
 
 ### P4: "¿Para qué sirve la tabla de símbolos?"
+
 **R**: Llevar registro de todas las variables:
+
 - Nombre
 - Si está inicializada
 - Dirección de memoria (más tarde)
 
 ### P5: "¿Cómo funciona la máquina virtual?"
+
 **R**: Simula una computadora simple:
+
 1. Lee instrucciones una por una
 2. Ejecuta operaciones sobre memoria y acumulador
 3. Mantiene un contador de programa (PC)
@@ -602,9 +631,11 @@ project_final/
 ## CARACTERÍSTICAS DEL LENGUAJE MINILANG
 
 ### Tipos de datos
+
 - **Solo enteros**: No hay flotantes, strings, ni booleanos
 
 ### Declaraciones
+
 - `read variable;` - Leer valor
 - `print expresion;` - Imprimir valor
 - `variable = expresion;` - Asignación
@@ -612,11 +643,13 @@ project_final/
 - `while condicion { ... }` - Bucle
 
 ### Operadores
+
 - **Aritméticos**: `+`, `-`, `*`, `/`
 - **Relacionales**: `<`, `>`, `<=`, `>=`, `==`, `!=`
 - **Unario**: `-` (negación)
 
 ### Ejemplo completo
+
 ```
 // Programa que calcula factorial
 read n;
@@ -635,12 +668,14 @@ end
 ## CÓMO DEMOSTRAR EL PROYECTO
 
 ### Demo 1: Interfaz Web
+
 1. Ejecutar: `python web_app.py`
 2. Abrir navegador: `http://localhost:5000`
 3. Mostrar ejemplos predefinidos
 4. Compilar y ver todas las etapas
 
 ### Demo 2: Línea de comandos
+
 ```bash
 # Compilar y ejecutar
 python -m minilang_compiler.compiler programa.minilang --run --inputs 5
@@ -656,6 +691,7 @@ python -m minilang_compiler.compiler programa.minilang --run --trace-vm
 ```
 
 ### Demo 3: Mostrar tests
+
 ```bash
 pytest -v
 ```
@@ -677,12 +713,14 @@ pytest -v
 ## CONSEJOS PARA LA PRESENTACIÓN
 
 ### Preparación
+
 1. Practica ejecutar los demos
 2. Ten ejemplos preparados
 3. Conoce bien el flujo de una fase
 4. Prepara respuestas a preguntas comunes
 
 ### Durante la presentación
+
 1. **Empieza simple**: Muestra un ejemplo pequeño
 2. **Ve paso a paso**: Explica cada fase con su entrada/salida
 3. **Usa la interfaz web**: Es visual y fácil de entender
@@ -690,6 +728,7 @@ pytest -v
 5. **Demuestra que funciona**: Ejecuta programas
 
 ### Estructura sugerida
+
 1. **Introducción** (2 min): ¿Qué es un compilador?
 2. **Arquitectura** (3 min): Las 8 fases con diagrama
 3. **Demo** (10 min): Ejemplo completo paso a paso
@@ -724,12 +763,14 @@ pytest -v
 ## NOTAS FINALES
 
 **Recuerda**: No necesitas memorizar cada línea de código. Lo importante es:
+
 1. Entender el propósito de cada fase
 2. Poder explicar el flujo general
 3. Demostrar que el proyecto funciona
 4. Responder preguntas conceptuales
 
 **Si te preguntan algo que no sabes**:
+
 - "Déjame verificar el código para darte la respuesta exacta"
 - "El concepto general es X, pero puedo mostrarte la implementación"
 - "Esa es una pregunta interesante, revisemos juntos cómo está implementado"

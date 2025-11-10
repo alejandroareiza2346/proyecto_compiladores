@@ -1,8 +1,6 @@
 """
 MÓDULO DE ANÁLISIS LÉXICO (LEXER)
-Proyecto: Compilador MiniLang
-Universidad: [Nombre de la Universidad]
-Curso: Compiladores
+
 
 PROPÓSITO:
 Implementa la primera fase de compilación: el análisis léxico.
